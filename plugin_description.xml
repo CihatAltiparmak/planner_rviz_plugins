@@ -5,6 +5,14 @@
     <description>
       Displays direction and scale of accelerations from geometry_msgs::msg::PoseStamped messages.
     </description>
-    <message_type>geometry_msgs/msg/PoseStamped</message_type>
+    <message_type>planner_msgs/msg/Point</message_type>
+  </class>
+  <class name="planner_rviz_plugins/Trajectory"
+         type="planner_rviz_plugins::TrajectoryDisplay"
+         base_class_type="rviz_common::Display">
+    <description>
+      Displays path as squared shape.
+    </description>
+    <message_type>planner_msgs/msg/Path</message_type>
   </class>
 </library>

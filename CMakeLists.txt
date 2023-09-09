@@ -28,6 +28,7 @@ set(CMAKE_AUTOMOC ON)
 
 set(INCLUDE_FILES_QT
   include/planner_rviz_plugins/trajectory_point_display.hpp
+  include/planner_rviz_plugins/trajectory_display.hpp
 )
 
 qt5_wrap_cpp(MOC_FILES ${INCLUDE_FILES_QT})
@@ -37,6 +38,8 @@ qt5_wrap_cpp(MOC_FILES ${INCLUDE_FILES_QT})
 set(SRC_FILES
   src/trajectory_point_display.cpp
   src/trajectory_point_visual.cpp
+  src/trajectory_display.cpp
+  src/trajectory_visual.cpp
 )
 
 include_directories(include)
