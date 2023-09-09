@@ -19,13 +19,15 @@ find_package(Qt5 REQUIRED COMPONENTS Widgets)
 find_package(rclcpp REQUIRED)
 find_package(rviz_common REQUIRED)
 find_package(rviz_rendering REQUIRED)
+find_package(tf2 REQUIRED)
+find_package(planner_msgs REQUIRED)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 ## This setting causes Qt's "MOC" generation to happen automatically.
 set(CMAKE_AUTOMOC ON)
 
 set(INCLUDE_FILES_QT
-  include/planner_rviz_plugins/trajectory_display.hpp
+  include/planner_rviz_plugins/trajectory_point_display.hpp
 )
 
 qt5_wrap_cpp(MOC_FILES ${INCLUDE_FILES_QT})
@@ -33,8 +35,8 @@ qt5_wrap_cpp(MOC_FILES ${INCLUDE_FILES_QT})
 ## Here we specify the list of source files.
 ## The generated MOC files are included automatically as headers.
 set(SRC_FILES
-  src/trajectory_display.cpp
-  src/trajectory_visual.cpp
+  src/trajectory_point_display.cpp
+  src/trajectory_point_visual.cpp
 )
 
 include_directories(include)
@@ -44,7 +46,9 @@ ament_target_dependencies(${PROJECT_NAME}
   "geometry_msgs"
   "rclcpp"
   "rviz_common"
-  "rviz_rendering")
+  "rviz_rendering"
+  "tf2"
+  "planner_msgs")
 
 target_include_directories(${PROJECT_NAME} PUBLIC
   ${Qt5Widgets_INCLUDE_DIRS})
@@ -56,7 +60,9 @@ ament_export_dependencies(
   geometry_msgs
   rclcpp
   rviz_common
-  rviz_rendering)
+  rviz_rendering
+  tf2
+  planner_msgs)
 
 install(
   FILES plugin_description.xml
@@ -71,12 +77,6 @@ install(TARGETS
 )
 
 ## END_TUTORIAL
-
-ament_export_dependencies(
-  geometry_msgs
-  rclcpp
-  rviz_common
-  rviz_rendering)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

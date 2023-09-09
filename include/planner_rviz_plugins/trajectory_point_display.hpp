@@ -5,12 +5,9 @@
 
 #include <OgreSceneManager.h>
 #include <OgreSceneNode.h>
-#include <tf2_ros/transform_listener.h>
 
 #include <deque>
-#include <geometry_msgs/msg/pose_stamped.hpp>
 #include <memory>
-#include <planner_rviz_plugins/trajectory_visual.hpp>
 #include <rviz_common/display.hpp>
 #include <rviz_common/properties/color_property.hpp>
 #include <rviz_common/properties/float_property.hpp>
@@ -18,6 +15,11 @@
 #include <rviz_common/visualization_manager.hpp>
 
 #include "rviz_common/message_filter_display.hpp"
+// #include <geometry_msgs/msg/pose_stamped.hpp>
+#include <tf2_ros/transform_listener.h>
+
+#include <planner_msgs/msg/point.hpp>
+#include <planner_rviz_plugins/trajectory_point_visual.hpp>
 
 #endif
 
@@ -35,15 +37,15 @@ class IntProperty;
 
 namespace planner_rviz_plugins {
 
-class TrajectoryVisual;
+class TrajectoryPointVisual;
 
-class TrajectoryDisplay : public rviz_common::MessageFilterDisplay<
-                              geometry_msgs::msg::PoseStamped> {
+class TrajectoryPointDisplay
+    : public rviz_common::MessageFilterDisplay<planner_msgs::msg::Point> {
     Q_OBJECT
 
    public:
-    TrajectoryDisplay();
-    virtual ~TrajectoryDisplay();
+    TrajectoryPointDisplay();
+    virtual ~TrajectoryPointDisplay();
 
    protected:
     virtual void onInitialize();
@@ -54,9 +56,9 @@ class TrajectoryDisplay : public rviz_common::MessageFilterDisplay<
     void updateHistoryLength();
 
    private:
-    void processMessage(geometry_msgs::msg::PoseStamped::ConstSharedPtr msg);
+    void processMessage(planner_msgs::msg::Point::ConstSharedPtr msg);
 
-    std::deque<std::shared_ptr<TrajectoryVisual>> visuals_;
+    std::deque<std::shared_ptr<TrajectoryPointVisual>> visuals_;
 
     rviz_common::properties::ColorProperty* color_property_;
     rviz_common::properties::FloatProperty* alpha_property_;

@@ -2,10 +2,11 @@
 #define __TRAJECTORY_VISUAL_HPP__
 
 #include <Ogre.h>
+// #include <geometry_msgs/msg/pose_stamped.hpp>
+#include <tf2/LinearMath/Quaternion.h>
 
-#include <geometry_msgs/msg/pose_stamped.hpp>
-
-#include "rviz_rendering/objects/shape.hpp"
+#include <planner_msgs/msg/point.hpp>
+#include <rviz_rendering/objects/shape.hpp>
 
 namespace Ogre {
 class Quaternion;
@@ -17,12 +18,12 @@ class Shape;
 
 namespace planner_rviz_plugins {
 
-class TrajectoryVisual {
+class TrajectoryPointVisual {
    public:
-    TrajectoryVisual(Ogre::SceneManager*, Ogre::SceneNode*);
-    virtual ~TrajectoryVisual();
+    TrajectoryPointVisual(Ogre::SceneManager*, Ogre::SceneNode*);
+    virtual ~TrajectoryPointVisual();
 
-    void setMessage(geometry_msgs::msg::PoseStamped::ConstSharedPtr);
+    void setMessage(planner_msgs::msg::Point::ConstSharedPtr);
     void setFramePosition(const Ogre::Vector3&);
     void setFrameOrientation(const Ogre::Quaternion&);
     void setColor(float, float, float, float);

@@ -1,6 +1,6 @@
 <library path="planner_rviz_plugins">
-  <class name="planner_rviz_plugins/Trajectory"
-         type="planner_rviz_plugins::TrajectoryDisplay"
+  <class name="planner_rviz_plugins/TrajectoryPoint"
+         type="planner_rviz_plugins::TrajectoryPointDisplay"
          base_class_type="rviz_common::Display">
     <description>
       Displays direction and scale of accelerations from geometry_msgs::msg::PoseStamped messages.

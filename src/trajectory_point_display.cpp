@@ -1,8 +1,8 @@
-#include <planner_rviz_plugins/trajectory_display.hpp>
+#include <planner_rviz_plugins/trajectory_point_display.hpp>
 
 namespace planner_rviz_plugins {
 
-TrajectoryDisplay::TrajectoryDisplay() {
+TrajectoryPointDisplay::TrajectoryPointDisplay() {
     color_property_ = new rviz_common::properties::ColorProperty(
         "Color", QColor(204, 51, 204), "Color to draw the square", this,
         SLOT(updateColorAndAlpha()));
@@ -19,19 +19,19 @@ TrajectoryDisplay::TrajectoryDisplay() {
     history_length_property_->setMax(100000);
 }
 
-TrajectoryDisplay::~TrajectoryDisplay() {}
+TrajectoryPointDisplay::~TrajectoryPointDisplay() {}
 
-void TrajectoryDisplay::onInitialize() {
+void TrajectoryPointDisplay::onInitialize() {
     MFDClass::onInitialize();
     updateHistoryLength();
 }
 
-void TrajectoryDisplay::reset() {
+void TrajectoryPointDisplay::reset() {
     MFDClass::reset();
     visuals_.clear();
 }
 
-void TrajectoryDisplay::updateColorAndAlpha() {
+void TrajectoryPointDisplay::updateColorAndAlpha() {
     float alpha = alpha_property_->getFloat();
     Ogre::ColourValue color = color_property_->getOgreColor();
 
@@ -40,7 +40,7 @@ void TrajectoryDisplay::updateColorAndAlpha() {
     }
 }
 
-void TrajectoryDisplay::updateHistoryLength() {
+void TrajectoryPointDisplay::updateHistoryLength() {
     size_t history_length_ =
         static_cast<size_t>(history_length_property_->getInt());
     if (visuals_.size() > history_length_) {
@@ -48,23 +48,23 @@ void TrajectoryDisplay::updateHistoryLength() {
     }
 }
 
-void TrajectoryDisplay::processMessage(
-    geometry_msgs::msg::PoseStamped::ConstSharedPtr msg) {
+void TrajectoryPointDisplay::processMessage(
+    planner_msgs::msg::Point::ConstSharedPtr msg) {
     Ogre::Quaternion orientation;
     Ogre::Vector3 position;
 
     if (!context_->getFrameManager()->getTransform(
             msg->header.frame_id, msg->header.stamp, position, orientation)) {
-        RCLCPP_INFO(rclcpp::get_logger("trajectory_display"),
+        RCLCPP_INFO(rclcpp::get_logger("trajectory_point_display"),
                     "Error transforming from frame '%s' to frame '%s'",
                     msg->header.frame_id.c_str(), qPrintable(fixed_frame_));
         return;
     }
 
     // Set the contents of the visual.
-    std::shared_ptr<TrajectoryVisual> visual;
+    std::shared_ptr<TrajectoryPointVisual> visual;
     visual.reset(
-        new TrajectoryVisual(context_->getSceneManager(), scene_node_));
+        new TrajectoryPointVisual(context_->getSceneManager(), scene_node_));
     visual->setMessage(msg);
     visual->setFramePosition(position);
     visual->setFrameOrientation(orientation);
@@ -84,5 +84,5 @@ void TrajectoryDisplay::processMessage(
 }  // end of namespace planner_rviz_plugins
 
 #include <pluginlib/class_list_macros.hpp>  // NOLINT
-PLUGINLIB_EXPORT_CLASS(planner_rviz_plugins::TrajectoryDisplay,
+PLUGINLIB_EXPORT_CLASS(planner_rviz_plugins::TrajectoryPointDisplay,
                        rviz_common::Display)
