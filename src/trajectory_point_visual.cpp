@@ -24,9 +24,9 @@ void TrajectoryPointVisual::setMessage(
     q.setRPY(msg->yaw, 0.0, 0.0);
     Ogre::Quaternion rot_qua(q.x(), q.y(), q.z(), q.w());
 
-    float length = pos_vec.length();
-    Ogre::Vector3 scale(length, length, 0.1);
-    pose_shape_->setScale(scale);
+    // float length = pos_vec.length();
+    // Ogre::Vector3 scale(length, length, 0.1);
+    // pose_shape_->setScale(scale);
     pose_shape_->setPosition(pos_vec);
     pose_shape_->setOrientation(rot_qua);
     // pose_shape_->setDirection(acc);
@@ -43,6 +43,10 @@ void TrajectoryPointVisual::setFrameOrientation(
 
 void TrajectoryPointVisual::setColor(float r, float g, float b, float a) {
     pose_shape_->setColor(r, g, b, a);
+}
+
+void TrajectoryPointVisual::setDimension(const Ogre::Vector3& dim) {
+    pose_shape_->setScale(dim);
 }
 
 }  // end of namespace planner_rviz_plugins

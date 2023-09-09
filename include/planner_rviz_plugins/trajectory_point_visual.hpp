@@ -1,5 +1,5 @@
-#ifndef __TRAJECTORY_VISUAL_HPP__
-#define __TRAJECTORY_VISUAL_HPP__
+#ifndef __TRAJECTORY_POINT_VISUAL_HPP__
+#define __TRAJECTORY_POINT_VISUAL_HPP__
 
 #include <Ogre.h>
 // #include <geometry_msgs/msg/pose_stamped.hpp>
@@ -27,6 +27,7 @@ class TrajectoryPointVisual {
     void setFramePosition(const Ogre::Vector3&);
     void setFrameOrientation(const Ogre::Quaternion&);
     void setColor(float, float, float, float);
+    void setDimension(const Ogre::Vector3&);
 
    private:
     std::shared_ptr<rviz_rendering::Shape> pose_shape_;

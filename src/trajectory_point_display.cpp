@@ -17,6 +17,11 @@ TrajectoryPointDisplay::TrajectoryPointDisplay() {
 
     history_length_property_->setMin(1);
     history_length_property_->setMax(100000);
+
+    car_dimension_property_ = new rviz_common::properties::VectorProperty(
+        "Car Dimension", Ogre::Vector3(3, 3, 3),
+        "Dimensions of Car in x, y, z respectly", this,
+        SLOT(updateCarDimension()));
 }
 
 TrajectoryPointDisplay::~TrajectoryPointDisplay() {}
@@ -48,6 +53,14 @@ void TrajectoryPointDisplay::updateHistoryLength() {
     }
 }
 
+void TrajectoryPointDisplay::updateCarDimension() {
+    Ogre::Vector3 car_dim = car_dimension_property_->getVector();
+
+    for (size_t i = 0; i < visuals_.size(); i++) {
+        visuals_[i]->setDimension(car_dim);
+    }
+}
+
 void TrajectoryPointDisplay::processMessage(
     planner_msgs::msg::Point::ConstSharedPtr msg) {
     Ogre::Quaternion orientation;
@@ -72,6 +85,9 @@ void TrajectoryPointDisplay::processMessage(
     float alpha = alpha_property_->getFloat();
     Ogre::ColourValue color = color_property_->getOgreColor();
     visual->setColor(color.r, color.g, color.b, alpha);
+
+    Ogre::Vector3 car_dim = car_dimension_property_->getVector();
+    visual->setDimension(car_dim);
 
     size_t history_length_ =
         static_cast<size_t>(history_length_property_->getInt());
