@@ -8,7 +8,7 @@ TrajectoryPointDisplay::TrajectoryPointDisplay() {
         SLOT(updateColorAndAlpha()));
 
     alpha_property_ = new rviz_common::properties::FloatProperty(
-        "Color", 1.0, "0 is fully transparent, 1.0 is fully opaque.", this,
+        "Alpha", 1.0, "0 is fully transparent, 1.0 is fully opaque.", this,
         SLOT(updateColorAndAlpha()));
 
     history_length_property_ = new rviz_common::properties::IntProperty(

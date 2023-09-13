@@ -20,16 +20,13 @@ void TrajectoryPointVisual::setMessage(
     Ogre::Vector3 pos_vec(msg->x, msg->y, 0.0);
 
     tf2::Quaternion q;
-    // Create a quaternion from roll/pitch/yaw in radians (0, 0, 0)
-    q.setRPY(msg->yaw, 0.0, 0.0);
+    // Create a quaternion from roll/pitch/yaw in radians
+    // we have to have pi/2 rad pitch for car trajectory visualization
+    q.setRPY(0.0, 1.57079632679, msg->yaw);
     Ogre::Quaternion rot_qua(q.x(), q.y(), q.z(), q.w());
 
-    // float length = pos_vec.length();
-    // Ogre::Vector3 scale(length, length, 0.1);
-    // pose_shape_->setScale(scale);
     pose_shape_->setPosition(pos_vec);
     pose_shape_->setOrientation(rot_qua);
-    // pose_shape_->setDirection(acc);
 }
 
 void TrajectoryPointVisual::setFramePosition(const Ogre::Vector3& position) {
